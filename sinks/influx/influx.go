@@ -8,18 +8,19 @@ import (
 
 type Sink struct {
 	c client.Client
+	db string
 }
 
-func New(url string) *Sink {
+func New(url string, db string) *Sink {
 	if c, err := client.NewHTTPClient(client.HTTPConfig{Addr: url}); err != nil {
 		panic(err)
 	} else {
-		return &Sink{c}
+		return &Sink{c, db}
 	}
 }
 
 func (s *Sink) Write(e *event.Event) {
-	batch, err := client.NewBatchPoints(client.BatchPointsConfig{Database: "testing", Precision: "s"})
+	batch, err := client.NewBatchPoints(client.BatchPointsConfig{Database: s.db, Precision: "s"})
 	if err != nil {
 		panic(err)
 	}

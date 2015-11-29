@@ -20,7 +20,7 @@ func main() {
 	source := journald.New()
 	sinks := []Sink{}
 	if v, ok := os.LookupEnv("INFLUX_URL"); ok {
-		sinks = append(sinks, influx.New(v))
+		sinks = append(sinks, influx.New(v, "journal"))
 	}
 	if v, ok := os.LookupEnv("GRAYLOG_ADDRESS"); ok {
 		sinks = append(sinks, gelf.New("udp", v))
