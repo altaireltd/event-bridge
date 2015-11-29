@@ -3,7 +3,7 @@ package influx
 import (
 	"fmt"
 	"github.com/altaireltd/event-bridge/event"
-	client "github.com/influxdb/influxdb/client/v2"
+	"github.com/influxdb/influxdb/client/v2"
 )
 
 type Sink struct {
