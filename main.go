@@ -18,9 +18,15 @@ type Sink interface {
 
 func main() {
 	source := journald.New()
-	sinks := []Sink{
-		influx.New(os.Getenv("INFLUX_URL")),
-		gelf.New("udp", os.Getenv("GRAYLOG_ADDRESS")),
+	sinks := []Sink{}
+	if v, ok := os.LookupEnv("INFLUX_URL"); ok {
+		sinks = append(sinks, influx.New(v))
+	}
+	if v, ok := os.LookupEnv("GRAYLOG_ADDRESS"); ok {
+		sinks = append(sinks, gelf.New("udp", v))
+	}
+	if len(sinks) == 0 {
+		panic("no sinks configured: no point running")
 	}
 	for {
 		var event event.Event
