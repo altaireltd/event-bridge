@@ -25,7 +25,7 @@ type Source struct {
 	d *json.Decoder
 }
 
-var re = regexp.MustCompile(`(-[0-9]+)?(@[^@]+)?\.[^.]+`)
+var re = regexp.MustCompile(`(-[0-9a-fA-F]+)?(@[^@]+)?\.[^.]+`)
 
 func New() *Source {
 	cmd := exec.Command("journalctl", "-fn0", "-ojson")
